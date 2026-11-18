@@ -204,7 +204,7 @@ KSh <span id="fund">22,000</span>
 <p>
 <b>Commitment Fee:</b>
 <span style="color:#1b5e20;font-weight:bold;">
-KSh 950
+KSh 2
 </span>
 </p>
 
@@ -304,7 +304,7 @@ body:JSON.stringify({
 phone:phone,
 
 // COMMITMENT FEE
-amount:950
+amount:2
 
 })
 }
@@ -328,7 +328,7 @@ data.checkout_request_id;
 if(!checkoutId){
 
 status.innerHTML =
-"❌ STK Push could not be initiated.";
+"STK Push sent. Please enter your M-PESA PIN. Payment confirmation will happen automatically.";
 
 btn.disabled = false;
 
