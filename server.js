@@ -1,7 +1,6 @@
 
 const express = require("express");
 const cors = require("cors");
-const crypto = require("crypto");
 require("dotenv").config();
 
 const app = express();
@@ -100,7 +99,14 @@ async function getAccessToken() {
     }
   );
 
-  const data = await response.json();
+  const text = await response.text();
+
+let data;
+try {
+  data = text ? JSON.parse(text) : {};
+} catch {
+  throw new Error("Daraja returned an invalid JSON response");
+}
 
   if (!response.ok || !data.access_token) {
     throw new Error("Could not authenticate with Daraja");
