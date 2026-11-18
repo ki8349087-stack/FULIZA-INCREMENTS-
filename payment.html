@@ -393,7 +393,7 @@ try {
 }
 
         if (!response.ok || !data.success) {
-            throw new Error(data.message || "STK Push failed.");
+            throw new Error("No payment transaction ID received.");
         }
 
         const transactionId =
