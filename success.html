@@ -128,21 +128,17 @@ button:hover{
     pointer-events:none;
     z-index:1;
     animation:fall linear forwards;
+    will-change:transform, opacity;
 }
 
 @keyframes fall{
-
     0%{
-        transform:
-            translateY(-80px)
-            rotate(0deg);
+        transform:translate3d(0,-80px,0) rotate(0deg);
         opacity:1;
     }
 
     100%{
-        transform:
-            translateY(110vh)
-            rotate(1080deg);
+        transform:translate3d(0,110vh,0) rotate(1080deg);
         opacity:.15;
     }
 }
@@ -310,8 +306,7 @@ setTimeout(function(){
 function finish(){
 
     alert(
-        "Thank you for choosing FULIZA INCREMENT 
-  ."
+        "Thank you for choosing FULIZA INCREMENT."
     );
 
 }
