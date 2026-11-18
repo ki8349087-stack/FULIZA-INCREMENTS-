@@ -6,8 +6,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json({ limit: "20kb" }));
-
+// Frontend configuration
 const allowedOrigins = (process.env.FRONTEND_URL || "")
   .split(",")
   .map(origin => origin.trim())
@@ -23,11 +22,13 @@ app.use(cors({
   }
 }));
 
+app.use(express.json({ limit: "20kb" }));
+
 // Health check
 app.get("/health", (req, res) => {
   res.status(200).json({
     success: true,
-    service: "Independent Business API",
+    service: "NYOTA FUNDS API",
     status: "running"
   });
 });
@@ -36,22 +37,31 @@ app.get("/health", (req, res) => {
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Business API is online"
+    message: "NYOTA FUNDS API is online"
   });
 });
 
-// Payment route placeholders
+// Payment endpoint - intentionally disabled
 app.post("/stk-push", (req, res) => {
-  return res.status(501).json({
+  res.status(503).json({
     success: false,
-    message: "Payment integration must be configured for the verified business."
+    message: "Payment service is not configured."
   });
 });
 
+// Payment status - intentionally disabled
 app.post("/payment-status", (req, res) => {
-  return res.status(501).json({
+  res.status(503).json({
     success: false,
     message: "Payment status service is not configured."
+  });
+});
+
+// Webhook endpoint - intentionally disabled
+app.post("/callback", (req, res) => {
+  res.status(503).json({
+    success: false,
+    message: "Webhook processing is not configured."
   });
 });
 
@@ -67,7 +77,9 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error("Server error:", err.message);
 
-  if (res.headersSent) return next(err);
+  if (res.headersSent) {
+    return next(err);
+  }
 
   res.status(500).json({
     success: false,
@@ -75,6 +87,7 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`NYOTA FUNDS API running on port ${PORT}`);
 });
