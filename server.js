@@ -172,7 +172,15 @@ app.post("/stk-push", async (req, res) => {
       }
     );
 
-    const data = await response.json();
+    const text = await response.text();
+
+let data;
+
+try {
+  data = text ? JSON.parse(text) : {};
+} catch {
+  throw new Error("Server returned an invalid JSON response");
+}
 
     if (!response.ok || data.ResponseCode !== "0") {
       console.error("Daraja initiation error:", data);
@@ -278,7 +286,7 @@ app.post("/callback", (req, res) => {
 
 // CHECK PAYMENT STATUS
 app.post("/payment-status", (req, res) => {
-  const transactionId = String(req.body.transactionId || "");
+  const transactionId = String(req.body?.transactionId || "");
 
   if (!transactionId) {
     return jsonError(res, 400, "Transaction ID is required");
