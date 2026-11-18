@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SAFARICOM PLC— Select Your Limit</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.body{
+    min-height:100vh;
+    background:#E8F7EF;
+    font-family:'Mali',cursive;
+    color:#006B3F;
+}
+.container{
+    width:92%;
+    max-width:480px;
+    margin:auto;
+}
+ 
+
+header{
+    background:#00A651;
+    color:#fff;
+    padding:22px 0;
+    border-bottom:1px solid #00A651;
+    text-align:center;
+} 
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+}
+
+.brand{
+    margin-top:4px;
+    font-size:13px;
+    opacity:.9;
+}
+
+.profile{
+    background:#fff;
+    margin-top:20px;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#E8F7EF;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+.name{
+    font-size:17px;
+    font-weight:700;
+}
+
+.info{
+    border-top:1px solid #D0EBDD;
+    padding-top:12px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+    font-size:14px;
+}
+
+.label{
+    color:#777;
+}
+
+.value{
+    font-weight:600;
+}
+
+.card{
+    background:#fff;
+    margin-top:24px;
+    padding:22px 18px 18px;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,107,63,.08);
+    border:1px solid #B7E5CC;
+} 
+
+h1{
+    font-size:22px;
+    margin-bottom:9px;
+    color:#006B3F;
+    font-weight:700;
+}
+
+.description{
+    color:#666;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.limit-option{
+    width:100%;
+    background:#fff;
+    border:1px solid #D0EBDD;
+    border-radius:10px;
+    padding:15px;
+    cursor:pointer;
+    text-align:left;
+    font-family:'Mali',cursive;
+}
+
+.limit-option:hover{
+    border-color:#00A651;
+    background:#F5FCF8;
+}
+
+.limit{
+    font-size:17px;
+    font-weight:700;
+    color:#00A651;
+}
+
+.fee{
+    margin-top:5px;
+    font-family:Arial,sans-serif;
+    font-size:13px;
+    color:#666;
+}
+
+.selected{
+    border:2px solid #00A651;
+    background:#E8F7EF;
+}
+
+.continue-btn{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:#00A651;
+    color:#fff;
+    font-family:'Mali',cursive;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.continue-btn:disabled{
+    background:#00A651;
+    cursor:not-allowed;
+} 
+
+.notice{
+    margin-top:16px;
+    padding:13px;
+    background:#E8F7EF;
+    border-radius:8px;
+    color:#555;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    line-height:1.5;
+}
+
+footer{
+    text-align:center;
+    padding:24px 10px;
+    color:#fff;
+    background:#00A651;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    line-height:1.7;
+}
+
+footer a{
+    color:#00A651;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">FULIZA INCREMENT PORTAL</div>
+        <div class="brand"></div>
+    </div>
+</header>
+
+
+
+        </div>
+
+    </section>
+
+    <section class="card">
+
+        <h1>Select Your Desired Limit</h1>
+
+        <p class="description">
+            Choose your preferred limit 
+        </p>
+
+        <div class="options">
+
+            <button type="button" class="limit-option"
+                data-limit="8000" data-fee="300">
+                <div class="limit">KSh 8,000</div>
+                <div class="fee">Processing Fee: KSh 300</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="15000" data-fee="390">
+                <div class="limit">KSh 15,000</div>
+                <div class="fee">Processing Fee: KSh 390</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="25000" data-fee="480">
+                <div class="limit">KSh 25,000</div>
+                <div class="fee">Processing Fee: KSh 480</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="35000" data-fee="560">
+                <div class="limit">KSh 35,000</div>
+                <div class="fee">Processing Fee: KSh 560</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="55000" data-fee="640">
+                <div class="limit">KSh 55,000</div>
+                <div class="fee">Processing Fee: KSh 640</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="65000" data-fee="750">
+                <div class="limit">KSh 65,000</div>
+                <div class="fee">Processing Fee: KSh 750</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="75000" data-fee="850">
+                <div class="limit">KSh 75,000</div>
+                <div class="fee">Processing Fee: KSh 850</div>
+            </button>
+
+            <button type="button" class="limit-option"
+                data-limit="85000" data-fee="1050">
+                <div class="limit">KSh 85,000</div>
+                <div class="fee">Processing Fee: KSh 1,050</div>
+            </button>
+
+        </div>
+
+        <button
+            type="button"
+            class="continue-btn"
+            id="continueBtn"
+            disabled>
+            Select a Limit
+        </button>
+
+        <div class="notice">
+           
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <a href="#">Terms &amp; Conditions</a> 
+    <a href="#">Privacy Policy</a> 
+    <a href="#">Support</a>
+
+    <br>
+
+    
+    © 2026 Safaricom Fuliza Portal. For assistance, contact us at WhatsApp +254 722 000 000  
+
+</footer>
+
+<script>
+
+const options =
+    document.querySelectorAll(".limit-option");
+
+const continueBtn =
+    document.getElementById("continueBtn");
+
+let selectedLimit = null;
+let selectedFee = null;
+
+
+/* Select an option */
+
+options.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        options.forEach(item => {
+            item.classList.remove("selected");
+        });
+
+        option.classList.add("selected");
+
+        selectedLimit =
+            option.dataset.limit;
+
+        selectedFee =
+            option.dataset.fee;
+
+        continueBtn.disabled = false;
+
+        continueBtn.textContent =
+            "Continue with KSh " +
+            Number(selectedLimit)
+                .toLocaleString();
+
+    });
+
+});
+
+
+/* Continue */
+
+continueBtn.addEventListener("click", () => {
+
+    if(!selectedLimit){
+        return;
+    }
+
+    sessionStorage.setItem(
+        "selectedLimit",
+        selectedLimit
+    );
+
+    sessionStorage.setItem(
+        "serviceFee",
+        selectedFee
+    );
+
+    window.location.href =
+    "payment.html"; 
+
+});
+
+</script>
+
+</body>
+</html>
