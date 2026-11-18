@@ -380,7 +380,17 @@ paymentForm.addEventListener("submit", async function(event) {
             }
         );
 
-        const data = await response.json();
+        const responseText = await response.text();
+
+let data;
+
+try {
+    data = JSON.parse(responseText);
+} catch {
+    throw new Error(
+        "Server returned an empty or invalid response. Please check your backend."
+    );
+}
 
         if (!response.ok || !data.success) {
             throw new Error(data.message || "STK Push failed.");
@@ -456,7 +466,16 @@ async function checkPayment(transactionId) {
                 }
             );
 
-            const result = await response.json();
+            const responseText = await response.text();
+
+let result;
+
+try {
+    result = JSON.parse(responseText);
+} catch {
+    console.error("Invalid payment status response:", responseText);
+    return;
+}
 
             if (!result.success) return;
 
